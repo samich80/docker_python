@@ -31,4 +31,4 @@ VOLUME ["/work"]
 COPY program/Changer.py /program/
 
 #ENTRYPOINT ["python /program/Changer.py"]
-CMD ["python", "/program/Changer.py"]
+#CMD ["python", "/program/Changer.py"]
