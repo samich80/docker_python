@@ -1,0 +1,38 @@
+import pickle
+import os.path
+import pymysql
+
+with open('/work/config/config.conf','rb') as inp:
+    d = pickle.load(inp)
+
+con = pymysql.connect('172.17.0.1', 'python_user', 'tiamat177', 'python-db', pymysql.cursors.Di$
+
+with con:
+    cur = con.cursor()
+    cur.execute("SELECT VERSION()")
+
+    version = cur.fetchone()
+
+    print("Database version: {}".format(version[0]))
+
+#files = os.listdir('/work/infiles/')
+pathIn = '/work/infiles/'
+pathOut = '/work/outfiles/'
+
+#while True:
+files = os.listdir(pathIn)
+if (files):
+    for file in files:
+        print (file)
+        filet = open(pathIn+file, 'r')
+        fileInput = filet.readlines()
+        filet.close()
+
+        filew = open(pathOut+file+'.out', 'w')
+
+        for line in fileInput:
+            for character in line:
+                if character in d:
+                    line = line.replace(character, d[character])
+                filew.write(line)
+        filew.close()
